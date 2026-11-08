@@ -603,6 +603,32 @@ body[data-state="open"] .card {
   color: var(--ink);
 }
 
+.card__contact {
+  margin: 10px 0 0;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+
+.card__phone {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: rgba(36, 58, 115, .35);
+  text-underline-offset: 3px;
+  white-space: nowrap;
+  transition: text-decoration-color var(--m-out) var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .card__phone:hover { text-decoration-color: var(--ink); }
+}
+
+.card__phone:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
 @media (min-width: 560px) {
   .card__invite { font-size: 17px; }
   .card__time { font-size: 15px; }
@@ -610,6 +636,7 @@ body[data-state="open"] .card {
   .card__address { font-size: 12.5px; }
   .card__closing { font-size: 15px; }
   .card__sign { font-size: 22px; }
+  .card__contact { font-size: 13.5px; }
 }
 
 /* Ảnh trường trong khung vòm, nằm sau ảnh tách nền */

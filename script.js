@@ -22,6 +22,7 @@ const CONFIG = {
   intro: "Mình thân mời bạn đến chung vui trong",
   closing: "Có bạn ở đó, ngày vui của mình sẽ trọn vẹn hơn.",
   defaultRecipient: "Bạn thân mến",     // khi link không có ?to=Tên
+  phone: "0935750892",                   // số điện thoại liên hệ, hiện cuối thiệp
   studyYears: "2022 – 2026",             // góc trên phải của thiệp
 
   // Gợi ý chỗ gửi xe, theo thứ tự ưu tiên. note: một câu ngắn hiện dưới địa chỉ.
@@ -76,6 +77,12 @@ const CONFIG = {
   }
 
 
+  // 0935750892 → 0935 750 892
+  function formatPhone(raw) {
+    const d = String(raw).replace(/\D/g, "");
+    return d.length === 10 ? `${d.slice(0, 4)} ${d.slice(4, 7)} ${d.slice(7)}` : raw;
+  }
+
   function setField(name, text) {
     document.querySelectorAll(`[data-field="${name}"]`).forEach((el) => {
       el.textContent = text;
@@ -99,6 +106,8 @@ const CONFIG = {
     setField("intro", CONFIG.intro);
     setField("closing", CONFIG.closing);
     setField("studyYears", CONFIG.studyYears);
+    setField("phoneText", formatPhone(CONFIG.phone));
+    document.getElementById("phoneLink").href = "tel:" + CONFIG.phone.replace(/\s+/g, "");
     setField("dateBig", `${pad(d)}.${pad(m)}.${y}`);
 
     const weekday = formatDateVi(CONFIG.date).split(",")[0];
