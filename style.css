@@ -46,7 +46,6 @@ body {
 
 body[data-state="fall"],
 body[data-state="opening"],
-body[data-state="flying"],
 body[data-state="reset"] { overflow: hidden; }
 
 img { display: block; max-width: 100%; }
@@ -262,14 +261,12 @@ body[data-state="open"] .scene { display: none; }
 }
 
 body[data-state="fall"] .envelope,
-body[data-state="opening"] .envelope,
-body[data-state="flying"] .envelope {
+body[data-state="opening"] .envelope {
   animation: env-fall 1.4s both;
 }
 
 body[data-state="fall"] .env-shadow,
-body[data-state="opening"] .env-shadow,
-body[data-state="flying"] .env-shadow {
+body[data-state="opening"] .env-shadow {
   animation: env-shadow 1.4s both;
 }
 
@@ -288,37 +285,36 @@ body[data-state="fall"] .hint {
   100%      { transform: rotateX(-180deg); z-index: 1; }
 }
 
-@keyframes env-card-rise {
-  from { transform: translateY(0); }
-  to   { transform: translateY(-100%); }
+@keyframes env-card-out {
+  0%   { transform: translateY(0); opacity: 1; }
+  70%  { transform: translateY(-104%); opacity: 1; }
+  100% { transform: translateY(-116%); opacity: 0; }
 }
 
-body[data-state="opening"] .envelope,
-body[data-state="flying"] .envelope { pointer-events: none; }
+@keyframes scene-out {
+  from { opacity: 1; transform: scale(1); }
+  to   { opacity: 0; transform: scale(.96); }
+}
 
-body[data-state="opening"] .env-flap,
-body[data-state="flying"] .env-flap {
+@keyframes card-in {
+  from { opacity: 0; transform: scale(.62); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+body[data-state="opening"] .envelope { pointer-events: none; }
+
+body[data-state="opening"] .env-flap {
   animation: flap-open .55s var(--ease-io) forwards;
 }
 
-body[data-state="opening"] .env-card,
-body[data-state="flying"] .env-card {
-  animation: env-card-rise .7s var(--ease-enter) .35s forwards;
+body[data-state="opening"] .env-card {
+  animation: env-card-out .9s var(--ease) .42s forwards;
 }
 
-body[data-state="opening"] .hint,
-body[data-state="flying"] .hint { opacity: 0; }
+body[data-state="opening"] .hint { opacity: 0; }
 
-/* Pha "bay": thiệp thật thay chỗ tấm giấy nhỏ (JS tính vị trí), phong bì lùi và mờ đi */
-body[data-state="flying"] .env-card {
-  opacity: 0;
-  transition: opacity .2s linear;
-}
-
-body[data-state="flying"] .scene {
-  opacity: 0;
-  transform: scale(.97);
-  transition: opacity .6s var(--ease), transform .6s var(--ease);
+body[data-state="opening"] .scene {
+  animation: scene-out .4s var(--ease) 1s forwards;
 }
 
 /* --------------------------------------------------------------------------
@@ -385,6 +381,11 @@ body[data-state="flying"] .scene {
 
 @media (min-width: 560px) {
   .card { padding: 28px 32px 0; }
+}
+
+body[data-state="opening"] .card {
+  visibility: visible;
+  animation: card-in .55s var(--ease-enter) 1.25s both;
 }
 
 body[data-state="open"] .card {
@@ -712,7 +713,7 @@ body[data-state="open"] .card {
 }
 
 body:not([data-state="open"]) .actions { visibility: hidden; opacity: 0; }
-body[data-state="open"] .actions { opacity: 1; transition: opacity .4s var(--ease) .15s; }
+body[data-state="open"] .actions { opacity: 1; transition: opacity .3s var(--ease); }
 
 .btn {
   display: inline-flex;

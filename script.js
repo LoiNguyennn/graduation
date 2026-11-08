@@ -209,55 +209,16 @@ const CONFIG = {
   }
 
   /* ---------- Trạng thái: fall → opening → open ---------- */
-  const CARD_INLINE = ["transition", "transform", "transformOrigin", "clipPath", "opacity", "visibility", "willChange"];
-
-  function finishOpen() {
-    body.dataset.state = "open";
-    CARD_INLINE.forEach((k) => { card.style[k] = ""; });
-    card.removeAttribute("aria-hidden");
-    replayBtn.hidden = false;
-    card.focus({ preventScroll: true });
-  }
-
-  // FLIP: đặt thiệp thật trùng khít tấm giấy nhỏ vừa nhô khỏi phong bì,
-  // rồi một chuyển động đưa nó về vị trí thật (trượt + phóng to + mở phần dưới).
-  function flyCard() {
-    const mini = document.querySelector(".env-card");
-    const m = mini.getBoundingClientRect();
-    const c = card.getBoundingClientRect();
-    const scale = m.width / c.width;
-    const dx = m.left - c.left;
-    const dy = m.top - c.top;
-    const hiddenBottom = Math.max(0, c.height - m.height / scale);
-
-    card.style.transition = "none";
-    card.style.transformOrigin = "0 0";
-    card.style.transform = `translate(${dx}px, ${dy}px) scale(${scale})`;
-    card.style.clipPath = `inset(0 0 ${hiddenBottom}px 0 round 4px)`;
-    card.style.opacity = "0";
-    card.style.visibility = "visible";
-    card.style.willChange = "transform, clip-path, opacity";
-    body.dataset.state = "flying";
-
-    void card.offsetWidth; // chốt trạng thái đầu trước khi transition
-    const ease = "cubic-bezier(.22, 1, .36, 1)";
-    card.style.transition = `transform .9s ${ease}, clip-path .9s ${ease}, opacity .2s linear`;
-    card.style.transform = "none";
-    card.style.clipPath = "inset(0 0 0 0 round 4px)";
-    card.style.opacity = "1";
-
-    setTimeout(finishOpen, 950);
-  }
-
   function openLetter() {
     if (body.dataset.state !== "fall") return;
     body.dataset.state = "opening";
-    if (reduceMotion.matches) {
-      setTimeout(finishOpen, 350);
-      return;
-    }
-    // nắp mở 0–0.55s, tấm giấy nhô lên 0.35–1.05s, rồi thiệp bay về chỗ
-    setTimeout(flyCard, 1080);
+    const wait = reduceMotion.matches ? 350 : 1900;
+    setTimeout(() => {
+      body.dataset.state = "open";
+      card.removeAttribute("aria-hidden");
+      replayBtn.hidden = false;
+      card.focus({ preventScroll: true });
+    }, wait);
   }
 
   function replay() {
