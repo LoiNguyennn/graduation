@@ -84,6 +84,15 @@ const CONFIG = {
     return d.length === 10 ? `${d.slice(0, 4)} ${d.slice(4, 7)} ${d.slice(7)}` : raw;
   }
 
+  function recipientFromUrl() {
+    const fromQuery = (new URLSearchParams(location.search).get("to") || "").trim();
+    if (fromQuery) return fromQuery;
+    let hash = location.hash.slice(1);
+    try { hash = decodeURIComponent(hash); } catch (_) { /* fragment lỗi mã hóa: giữ nguyên */ }
+    if (hash.startsWith("to=")) hash = hash.slice(3);
+    return hash.replace(/\+/g, " ").trim();
+  }
+
   function setField(name, text) {
     document.querySelectorAll(`[data-field="${name}"]`).forEach((el) => {
       el.textContent = text;
@@ -126,8 +135,9 @@ const CONFIG = {
     setField("parkingIntro", CONFIG.parkingIntro);
     renderParking();
 
-    // ?to=Tên  →  "Gửi Tên" trên phong bì và trong thiệp
-    const to = (new URLSearchParams(location.search).get("to") || "").trim().slice(0, 40);
+    // Tên người nhận: ưu tiên ?to=Tên, không có thì lấy từ fragment (#Tên hoặc #to=Tên).
+    // Fragment giữ nguyên qua link rút gọn, nên dùng được dạng go.zalo.me/graduation#Minh
+    const to = recipientFromUrl().slice(0, 40);
     setField("toName", to || CONFIG.defaultRecipient);
     if (to) {
       const env = document.querySelector('[data-field="toEnvelope"]');
