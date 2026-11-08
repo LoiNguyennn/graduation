@@ -6,21 +6,24 @@ const CONFIG = {
   fullName: "Nguyễn Phúc Lợi",           // họ tên đầy đủ in trên thiệp
   school: "Trường Đại học Khoa học Tự nhiên",
   university: "Đại học Quốc gia TP. Hồ Chí Minh",
+  schoolShort: "Trường ĐH Khoa học Tự nhiên",   // góc trên thiệp, cần ngắn
+  universityShort: "ĐHQG-HCM",
   degree: "Cử nhân Kỹ thuật Phần mềm",
   degreeEn: "Software Engineering",
 
   date: "2026-12-06",                    // YYYY-MM-DD
   time: "",                              // "HH:MM" giờ Việt Nam, ví dụ "08:30". Để trống nếu chưa có.
   durationMinutes: 120,                  // độ dài sự kiện trong file .ics khi đã có giờ
-  timePlaceholder: "Giờ cụ thể sẽ được cập nhật sớm",
+  timePlaceholder: "giờ sẽ cập nhật sớm",
 
-  venue: "Trường ĐH Khoa học Tự nhiên",
-  address: "Cơ sở 1, 227 Nguyễn Văn Cừ, Quận 5, TP.HCM",
+  venue: "Trường ĐH Khoa học Tự nhiên, cơ sở 1",
+  address: "227 Nguyễn Văn Cừ, Quận 5, TP.HCM",
   mapQuery: "Trường Đại học Khoa học Tự nhiên, 227 Nguyễn Văn Cừ, Phường 4, Quận 5, TP.HCM",
 
   intro: "Mình thân mời bạn đến chung vui trong",
-  closing: "Có bạn ở đó, ngày vui của mình sẽ trọn vẹn hơn. Hẹn gặp bạn!",
-  studyYears: "2022 – 2026",             // dòng nhỏ cuối thiệp
+  closing: "Có bạn ở đó, ngày vui của mình sẽ trọn vẹn hơn.",
+  defaultRecipient: "Bạn thân mến",     // khi link không có ?to=Tên
+  studyYears: "2022 – 2026",             // góc trên phải của thiệp
 
   icsTitle: "Lễ tốt nghiệp của Phúc Lợi",
   icsFileName: "le-tot-nghiep-loi.ics",
@@ -52,11 +55,6 @@ const CONFIG = {
     return `${weekday}, ngày ${pad(d)}/${pad(m)}/${y}`;
   }
 
-  function formatTimeVi(time) {
-    if (!time) return "";
-    const [h, mi] = time.split(":").map(Number);
-    return `Lúc ${pad(h)}:${pad(mi)}`;
-  }
 
   function setField(name, text) {
     document.querySelectorAll(`[data-field="${name}"]`).forEach((el) => {
@@ -72,21 +70,24 @@ const CONFIG = {
     setField("fullName", CONFIG.fullName);
     setField("school", CONFIG.school);
     setField("university", CONFIG.university);
+    setField("schoolShort", CONFIG.schoolShort);
+    setField("universityShort", CONFIG.universityShort);
     setField("degree", CONFIG.degree);
     setField("degreeEn", CONFIG.degreeEn);
     setField("venue", CONFIG.venue);
     setField("address", CONFIG.address);
     setField("intro", CONFIG.intro);
     setField("closing", CONFIG.closing);
-    setField("dateText", formatDateVi(CONFIG.date));
-    setField("monoLine", CONFIG.studyYears);
+    setField("studyYears", CONFIG.studyYears);
+    setField("dateBig", `${pad(d)}.${pad(m)}.${y}`);
 
-    const timeEl = document.querySelector('[data-field="timeText"]');
+    const weekday = formatDateVi(CONFIG.date).split(",")[0];
+    const timeEl = document.querySelector('[data-field="timeLine"]');
     if (CONFIG.time) {
-      timeEl.textContent = formatTimeVi(CONFIG.time);
+      timeEl.textContent = `Vào lúc ${CONFIG.time}, ${weekday}`;
       timeEl.classList.remove("is-placeholder");
     } else {
-      timeEl.textContent = CONFIG.timePlaceholder;
+      timeEl.textContent = `${weekday}, ${CONFIG.timePlaceholder}`;
       timeEl.classList.add("is-placeholder");
     }
 
@@ -95,11 +96,11 @@ const CONFIG = {
 
     // ?to=Tên  →  "Gửi Tên" trên phong bì và trong thiệp
     const to = (new URLSearchParams(location.search).get("to") || "").trim().slice(0, 40);
+    setField("toName", to || CONFIG.defaultRecipient);
     if (to) {
-      document.querySelectorAll('[data-field="toEnvelope"], [data-field="toCard"]').forEach((el) => {
-        el.querySelector("b").textContent = to;
-        el.hidden = false;
-      });
+      const env = document.querySelector('[data-field="toEnvelope"]');
+      env.querySelector("b").textContent = to;
+      env.hidden = false;
     }
   }
 

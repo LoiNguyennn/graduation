@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Lời mời dự lễ tốt nghiệp của Phúc Lợi</title>
   <meta name="description" content="Thân mời bạn đến dự lễ tốt nghiệp ngành Kỹ thuật Phần mềm tại Trường Đại học Khoa học Tự nhiên, ĐHQG-HCM, Chủ nhật 06/12/2026.">
-  <meta name="theme-color" content="#E9E2D3">
+  <meta name="theme-color" content="#DCE5D9">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 32 32%27%3E%3Ccircle cx=%2716%27 cy=%2716%27 r=%2714%27 fill=%27%238E2B2B%27/%3E%3Ctext x=%2716%27 y=%2722%27 text-anchor=%27middle%27 font-family=%27Georgia,serif%27 font-weight=%27700%27 font-size=%2717%27 fill=%27%23F7F2E8%27%3EL%3C/text%3E%3C/svg%3E">
 
   <!-- Open Graph: ảnh xem trước khi gửi link qua Zalo/Messenger.
@@ -22,20 +22,37 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500;1,600&family=Be+Vietnam+Pro:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap">
-  <link rel="preload" as="image" href="resources/me.jpg">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,900;1,400;1,500&family=Dancing+Script:wght@600;700&family=Be+Vietnam+Pro:wght@400;500;600&display=swap">
+  <link rel="preload" as="image" href="resources/me-cutout-trim.png">
   <link rel="stylesheet" href="style.css">
 </head>
 <body data-state="fall">
 
+  <!-- Lá monstera dùng chung (vẽ bằng SVG, tô màu qua CSS) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="monstera" viewBox="0 0 200 270">
+      <path fill="currentColor" fill-rule="evenodd" d="
+        M100 34 C78 4 20 6 16 60 C14 74 15 86 18 96 L84 106 L20 120 C18 132 20 142 24 152 L86 150 L28 170 C30 182 34 194 40 204 L90 194 L48 216 C60 236 82 254 100 264 C118 254 140 236 152 216 L110 194 L160 204 C166 194 170 182 172 170 L114 150 L176 152 C180 142 182 132 180 120 L116 106 L182 96 C185 86 186 74 184 60 C180 6 122 4 100 34 Z
+        M62 78 m-11 0 a11 6 0 1 0 22 0 a11 6 0 1 0 -22 0 Z
+        M138 78 m-11 0 a11 6 0 1 0 22 0 a11 6 0 1 0 -22 0 Z
+        M64 128 m-9 0 a9 5 0 1 0 18 0 a9 5 0 1 0 -18 0 Z
+        M136 128 m-9 0 a9 5 0 1 0 18 0 a9 5 0 1 0 -18 0 Z
+        M70 176 m-7 0 a7 4 0 1 0 14 0 a7 4 0 1 0 -14 0 Z
+        M130 176 m-7 0 a7 4 0 1 0 14 0 a7 4 0 1 0 -14 0 Z"/>
+      <path fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-linecap="round" d="M100 40 V252 M100 60 L40 80 M100 60 L160 80 M100 112 L46 134 M100 112 L154 134 M100 164 L58 184 M100 164 L142 184 M100 212 L72 226 M100 212 L128 226"/>
+      <path fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" d="M100 34 C100 20 96 8 90 0"/>
+    </symbol>
+  </svg>
+
   <!-- Màn hình đầu: mặt bàn, phong bì rơi xuống -->
   <div class="scene" id="scene">
     <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Chạm để mở thư mời">
+      <svg class="leaf leaf--desk" aria-hidden="true" focusable="false"><use href="#monstera"/></svg>
       <div class="env-shadow" aria-hidden="true"></div>
       <div class="env-inner" aria-hidden="true">
         <div class="env-back"></div>
         <div class="env-card">
-          <span class="env-card__text">Lời mời</span>
+          <span class="env-card__text">Thư mời</span>
         </div>
         <div class="env-front">
           <p class="env-to" data-field="toEnvelope" hidden>Gửi <b></b></p>
@@ -53,46 +70,48 @@
   <!-- Tấm thiệp chi tiết -->
   <main class="page">
     <article class="card" id="card" aria-hidden="true" tabindex="-1">
-      <header class="card__head">
+      <header class="card__top">
         <img class="card__logo" id="logo" src="resources/logo.png" alt="Logo Trường Đại học Khoa học Tự nhiên, ĐHQG-HCM" width="1280" height="1051" decoding="async">
-        <p class="card__school"><span data-field="school">Trường Đại học Khoa học Tự nhiên</span><br><span data-field="university">Đại học Quốc gia TP. Hồ Chí Minh</span></p>
+        <p class="card__school"><span data-field="schoolShort">Trường ĐH Khoa học Tự nhiên</span><br><span data-field="universityShort">ĐHQG-HCM</span></p>
+        <p class="card__years" data-field="studyYears">2022 – 2026</p>
       </header>
 
-      <div class="card__photo" id="photoFrame">
-        <img id="photo" src="resources/me.jpg" alt="Ảnh chân dung của Nguyễn Phúc Lợi" decoding="async">
-        <span class="card__photo-fallback" aria-hidden="true" data-field="hostInitial">L</span>
+      <div class="card__title">
+        <h1 class="card__display">Thư mời</h1>
+        <p class="card__script" aria-hidden="true">Graduation</p>
+        <p class="card__pill">Lễ tốt nghiệp của <span data-field="hostName">Phúc Lợi</span></p>
+        <p class="card__who"><span data-field="fullName">Nguyễn Phúc Lợi</span> · <span data-field="degree">Cử nhân Kỹ thuật Phần mềm</span></p>
       </div>
 
-      <p class="card__to" data-field="toCard" hidden>Gửi <b></b>,</p>
-      <p class="card__intro" data-field="intro">Mình thân mời bạn đến chung vui trong</p>
-      <h1 class="card__title">Lễ tốt nghiệp</h1>
-      <p class="card__name" data-field="fullName">Nguyễn Phúc Lợi</p>
-      <p class="card__major"><span data-field="degree">Cử nhân Kỹ thuật Phần mềm</span><br><span class="card__major-en" data-field="degreeEn">Software Engineering</span></p>
+      <div class="card__body">
+        <svg class="leaf leaf--big" aria-hidden="true" focusable="false"><use href="#monstera"/></svg>
+        <svg class="leaf leaf--small" aria-hidden="true" focusable="false"><use href="#monstera"/></svg>
 
-      <div class="card__rule" aria-hidden="true"><span class="wax wax--dot"></span></div>
-
-      <dl class="card__info">
-        <div class="card__info-row">
-          <dt>Thời gian</dt>
-          <dd data-field="dateText">Chủ nhật, ngày 06/12/2026</dd>
-          <dd class="card__time" data-field="timeText">Giờ cụ thể sẽ được cập nhật sớm</dd>
+        <div class="card__text">
+          <p class="card__invite">Thân mời</p>
+          <p class="card__to-name" data-field="toName">Bạn thân mến</p>
+          <p class="card__time" data-field="timeLine">Chủ nhật</p>
+          <p class="card__date" data-field="dateBig">06.12.2026</p>
         </div>
-        <div class="card__info-row">
-          <dt>Địa điểm</dt>
-          <dd data-field="venue">Trường ĐH Khoa học Tự nhiên</dd>
-          <dd class="card__address" data-field="address">Cơ sở 1, 227 Nguyễn Văn Cừ, Quận 5, TP.HCM</dd>
-        </div>
-      </dl>
 
-      <div class="card__actions">
-        <button class="btn btn--primary" id="addCalendar" type="button">Thêm vào lịch</button>
-        <a class="btn btn--ghost" id="openMap" href="#" target="_blank" rel="noopener">Xem bản đồ</a>
+        <div class="card__lower">
+          <p class="card__venue" data-field="venue">Trường ĐH Khoa học Tự nhiên, cơ sở 1</p>
+          <p class="card__address" data-field="address">227 Nguyễn Văn Cừ, Quận 5, TP.HCM</p>
+          <p class="card__closing" data-field="closing">Có bạn ở đó, ngày vui của mình sẽ trọn vẹn hơn.</p>
+          <p class="card__sign">— <span data-field="hostName">Phúc Lợi</span></p>
+        </div>
+
+        <div class="card__photo" id="photoFrame">
+          <img id="photo" src="resources/me-cutout-trim.png" alt="Ảnh Nguyễn Phúc Lợi đang giơ ngón cái, cầm biển Test mode on" decoding="async">
+          <span class="card__photo-fallback" aria-hidden="true" data-field="hostInitial">L</span>
+        </div>
       </div>
-
-      <p class="card__closing" data-field="closing">Có bạn ở đó, ngày vui của mình sẽ trọn vẹn hơn. Hẹn gặp bạn!</p>
-      <p class="card__sign">— <span data-field="hostName">Phúc Lợi</span></p>
-      <p class="card__mono" data-field="monoLine">2022 – 2026</p>
     </article>
+
+    <div class="actions">
+      <button class="btn btn--primary" id="addCalendar" type="button">Thêm vào lịch</button>
+      <a class="btn btn--ghost" id="openMap" href="#" target="_blank" rel="noopener">Xem bản đồ</a>
+    </div>
 
     <button class="replay" id="replay" type="button" hidden>
       <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M13.5 2.5v3h-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
