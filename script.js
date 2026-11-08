@@ -13,7 +13,6 @@ const CONFIG = {
 
   date: "2026-12-06",                    // YYYY-MM-DD
   time: "",                              // "HH:MM" giờ Việt Nam, ví dụ "08:30". Để trống nếu chưa có.
-  durationMinutes: 120,                  // độ dài sự kiện trong file .ics khi đã có giờ
   timePlaceholder: "giờ sẽ cập nhật sớm",
 
   venue: "Trường ĐH Khoa học Tự nhiên, cơ sở 1",
@@ -25,8 +24,28 @@ const CONFIG = {
   defaultRecipient: "Bạn thân mến",     // khi link không có ?to=Tên
   studyYears: "2022 – 2026",             // góc trên phải của thiệp
 
-  icsTitle: "Lễ tốt nghiệp của Phúc Lợi",
-  icsFileName: "le-tot-nghiep-loi.ics",
+  // Gợi ý chỗ gửi xe, theo thứ tự ưu tiên. note: một câu ngắn hiện dưới địa chỉ.
+  parkingIntro: "Ngày lễ bãi xe trong trường dễ quá tải, bạn có thể chọn một trong ba chỗ này.",
+  parking: [
+    {
+      name: "Trường ĐH Khoa học Tự nhiên",
+      address: "227 Nguyễn Văn Cừ, Quận 5",
+      note: "Trong khuôn viên trường, tiện nhất nhưng ngày lễ rất đông. Nên đến sớm.",
+      mapQuery: "Trường Đại học Khoa học Tự nhiên, 227 Nguyễn Văn Cừ, Quận 5, TP.HCM",
+    },
+    {
+      name: "Trường ĐH Sư phạm TP.HCM",
+      address: "280 An Dương Vương, Quận 5",
+      note: "Ngay cạnh trường, đi bộ khoảng 5 phút.",
+      mapQuery: "Trường Đại học Sư phạm TP.HCM, 280 An Dương Vương, Quận 5, TP.HCM",
+    },
+    {
+      name: "Nowzone",
+      address: "235 Nguyễn Văn Cừ, Quận 1",
+      note: "Trung tâm thương mại đối diện cổng trường, bãi xe tầng hầm, đi bộ khoảng 3 phút.",
+      mapQuery: "Nowzone Fashion Mall, 235 Nguyễn Văn Cừ, Quận 1, TP.HCM",
+    },
+  ],
 };
 
 /* ========================================================================== */
@@ -38,6 +57,7 @@ const CONFIG = {
   const envelope = document.getElementById("envelope");
   const card = document.getElementById("card");
   const replayBtn = document.getElementById("replay");
+  const parkingDialog = document.getElementById("parkingDialog");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   /* ---------- Tiện ích ---------- */
@@ -91,8 +111,9 @@ const CONFIG = {
       timeEl.classList.add("is-placeholder");
     }
 
-    document.getElementById("openMap").href =
-      "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(CONFIG.mapQuery);
+    document.getElementById("openMap").href = mapUrl(CONFIG.mapQuery);
+    setField("parkingIntro", CONFIG.parkingIntro);
+    renderParking();
 
     // ?to=Tên  →  "Gửi Tên" trên phong bì và trong thiệp
     const to = (new URLSearchParams(location.search).get("to") || "").trim().slice(0, 40);
@@ -102,6 +123,48 @@ const CONFIG = {
       env.querySelector("b").textContent = to;
       env.hidden = false;
     }
+  }
+
+  /* ---------- Chỗ gửi xe ---------- */
+  function mapUrl(query) {
+    return "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(query);
+  }
+
+  function renderParking() {
+    const list = document.getElementById("parkingList");
+    list.textContent = "";
+    CONFIG.parking.forEach((spot) => {
+      const li = document.createElement("li");
+      li.className = "parking__item";
+
+      const body = document.createElement("div");
+      body.className = "parking__body";
+      const name = document.createElement("p");
+      name.className = "parking__name";
+      name.textContent = spot.name;
+      const address = document.createElement("p");
+      address.className = "parking__address";
+      address.textContent = spot.address;
+      const note = document.createElement("p");
+      note.className = "parking__note";
+      note.textContent = spot.note;
+      body.append(name, address, note);
+
+      const link = document.createElement("a");
+      link.className = "parking__link";
+      link.href = mapUrl(spot.mapQuery);
+      link.target = "_blank";
+      link.rel = "noopener";
+      link.textContent = "Chỉ đường";
+      link.setAttribute("aria-label", "Chỉ đường tới " + spot.name);
+
+      li.append(body, link);
+      list.appendChild(li);
+    });
+  }
+
+  function openParking() {
+    parkingDialog.showModal();
   }
 
   /* ---------- Ảnh lỗi: hiện khung thay thế, ẩn logo ---------- */
@@ -122,77 +185,6 @@ const CONFIG = {
     if (photo.complete && photo.naturalWidth === 0) photoBroken();
     if (logo.complete && logo.naturalWidth === 0) logoBroken();
     if (campus.complete && campus.naturalWidth === 0) campusBroken();
-  }
-
-  /* ---------- Tạo file .ics ---------- */
-  function icsEscape(s) {
-    return String(s).replace(/\\/g, "\\\\").replace(/([,;])/g, "\\$1").replace(/\n/g, "\\n");
-  }
-
-  function toUtcStamp(ms) {
-    const dt = new Date(ms);
-    return (
-      dt.getUTCFullYear() +
-      pad(dt.getUTCMonth() + 1) +
-      pad(dt.getUTCDate()) +
-      "T" +
-      pad(dt.getUTCHours()) +
-      pad(dt.getUTCMinutes()) +
-      "00Z"
-    );
-  }
-
-  function buildIcs() {
-    const { y, m, d } = parseDate(CONFIG.date);
-    let dtStart, dtEnd;
-
-    if (CONFIG.time) {
-      const [h, mi] = CONFIG.time.split(":").map(Number);
-      const start = Date.UTC(y, m - 1, d, h - 7, mi); // giờ Việt Nam = UTC+7
-      const end = start + CONFIG.durationMinutes * 60 * 1000;
-      dtStart = "DTSTART:" + toUtcStamp(start);
-      dtEnd = "DTEND:" + toUtcStamp(end);
-    } else {
-      const next = new Date(Date.UTC(y, m - 1, d + 1));
-      dtStart = `DTSTART;VALUE=DATE:${y}${pad(m)}${pad(d)}`;
-      dtEnd = `DTEND;VALUE=DATE:${next.getUTCFullYear()}${pad(next.getUTCMonth() + 1)}${pad(next.getUTCDate())}`;
-    }
-
-    const location = `${CONFIG.venue}, ${CONFIG.address}`;
-    const description = CONFIG.time
-      ? `${CONFIG.degree} — ${CONFIG.school}, ${CONFIG.university}.`
-      : `${CONFIG.degree} — ${CONFIG.school}, ${CONFIG.university}. ${CONFIG.timePlaceholder}.`;
-
-    return [
-      "BEGIN:VCALENDAR",
-      "VERSION:2.0",
-      "PRODID:-//graduation-invite//VI",
-      "CALSCALE:GREGORIAN",
-      "METHOD:PUBLISH",
-      "BEGIN:VEVENT",
-      "UID:" + `${y}${pad(m)}${pad(d)}-graduation@invite`,
-      "DTSTAMP:" + toUtcStamp(Date.now()),
-      dtStart,
-      dtEnd,
-      "SUMMARY:" + icsEscape(CONFIG.icsTitle),
-      "LOCATION:" + icsEscape(location),
-      "DESCRIPTION:" + icsEscape(description),
-      "END:VEVENT",
-      "END:VCALENDAR",
-      "",
-    ].join("\r\n");
-  }
-
-  function downloadIcs() {
-    const blob = new Blob([buildIcs()], { type: "text/calendar;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = CONFIG.icsFileName;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
 
   /* ---------- Trạng thái: fall → opening → open ---------- */
@@ -226,7 +218,12 @@ const CONFIG = {
     }
   });
   replayBtn.addEventListener("click", replay);
-  document.getElementById("addCalendar").addEventListener("click", downloadIcs);
+  document.getElementById("openParking").addEventListener("click", openParking);
+  document.getElementById("closeParking").addEventListener("click", () => parkingDialog.close());
+  // Bấm ra ngoài hộp thoại thì đóng
+  parkingDialog.addEventListener("click", (e) => {
+    if (e.target === parkingDialog) parkingDialog.close();
+  });
 
   render();
   guardImages();

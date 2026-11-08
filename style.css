@@ -727,6 +727,139 @@ body[data-state="open"] .actions { opacity: 1; transition: opacity .3s var(--eas
   outline-offset: 3px;
 }
 
+/* Hộp thoại chỗ gửi xe */
+.parking {
+  width: min(440px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  margin: auto;
+  padding: 0;
+  border: 1.5px solid var(--ink);
+  border-radius: 14px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 0 30px 60px -30px rgba(var(--shadow-warm), .5);
+  overflow: auto;
+}
+
+.parking::backdrop {
+  background: rgba(36, 58, 115, .4);
+}
+
+.parking__head {
+  padding: 22px 22px 10px;
+}
+
+.parking__title {
+  margin: 0 0 6px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 1.15;
+}
+
+.parking__intro {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.parking__list {
+  list-style: none;
+  margin: 0;
+  padding: 0 22px;
+  counter-reset: spot;
+}
+
+.parking__item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 0;
+  border-top: 1px solid rgba(36, 58, 115, .18);
+  counter-increment: spot;
+}
+
+.parking__item::before {
+  content: counter(spot);
+  flex: none;
+  width: 26px;
+  height: 26px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 26px;
+  text-align: center;
+}
+
+.parking__body { flex: 1; min-width: 0; }
+
+.parking__name {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.parking__address {
+  margin: 1px 0 0;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.parking__note {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--ink-soft);
+}
+
+.parking__link {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform var(--m-out) var(--ease), background-color var(--m-out) var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .parking__link:hover { transform: translateY(-1px); background: #fff; transition-duration: var(--m-in); }
+}
+
+.parking__link:active { transform: translateY(1px) scale(.985); }
+
+.parking__link:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.parking__foot {
+  padding: 8px 22px 22px;
+  border-top: 1px solid rgba(36, 58, 115, .18);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.parking__foot .btn { min-height: 42px; padding: 0 20px; }
+
+@media (max-width: 480px) {
+  .parking__item { flex-wrap: wrap; row-gap: 8px; }
+  .parking__body { flex: 1 1 calc(100% - 38px); }
+  .parking__link { margin-left: 38px; }
+}
+
 /* Nút xem lại hiệu ứng */
 .replay {
   display: inline-flex;
