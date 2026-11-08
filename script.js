@@ -23,7 +23,7 @@ const CONFIG = {
   closing: "Có bạn ở đó, ngày vui của mình sẽ trọn vẹn hơn.",
   defaultRecipient: "Bạn thân mến",     // khi link không có ?to=Tên
   phone: "0935750892",                   // số điện thoại, hiện cuối thiệp
-  phoneLabel: "Đến nơi thì gọi mình nhé",  // câu dẫn trước số điện thoại
+  phoneLabel: "Đến nơi thì gọi Lợi nhé",  // câu dẫn trước số điện thoại
   studyYears: "2022 – 2026",             // góc trên phải của thiệp
 
   // Gợi ý chỗ gửi xe, theo thứ tự ưu tiên. note: một câu ngắn hiện dưới địa chỉ.
