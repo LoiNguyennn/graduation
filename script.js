@@ -22,7 +22,8 @@ const CONFIG = {
   intro: "Mình thân mời bạn đến chung vui trong",
   closing: "Có bạn ở đó, ngày vui của mình sẽ trọn vẹn hơn.",
   defaultRecipient: "Bạn thân mến",     // khi link không có ?to=Tên
-  phone: "0935750892",                   // số điện thoại liên hệ, hiện cuối thiệp
+  phone: "0935750892",                   // số điện thoại, hiện cuối thiệp
+  phoneLabel: "Cần gì cứ gọi mình nhé",  // câu dẫn trước số điện thoại
   studyYears: "2022 – 2026",             // góc trên phải của thiệp
 
   // Gợi ý chỗ gửi xe, theo thứ tự ưu tiên. note: một câu ngắn hiện dưới địa chỉ.
@@ -106,6 +107,7 @@ const CONFIG = {
     setField("intro", CONFIG.intro);
     setField("closing", CONFIG.closing);
     setField("studyYears", CONFIG.studyYears);
+    setField("phoneLabel", CONFIG.phoneLabel);
     setField("phoneText", formatPhone(CONFIG.phone));
     document.getElementById("phoneLink").href = "tel:" + CONFIG.phone.replace(/\s+/g, "");
     setField("dateBig", `${pad(d)}.${pad(m)}.${y}`);

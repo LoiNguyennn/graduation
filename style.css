@@ -606,12 +606,16 @@ body[data-state="open"] .card {
 .card__contact {
   margin: 10px 0 0;
   font-size: 12.5px;
+  line-height: 1.5;
+  font-style: italic;
   color: var(--ink-soft);
 }
 
 .card__phone {
   color: var(--ink);
+  font-style: normal;
   font-weight: 600;
+  font-size: 14px;
   text-decoration: underline;
   text-decoration-color: rgba(36, 58, 115, .35);
   text-underline-offset: 3px;
