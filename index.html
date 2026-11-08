@@ -28,26 +28,10 @@
 </head>
 <body data-state="fall">
 
-  <!-- Lá monstera dùng chung (vẽ bằng SVG, tô màu qua CSS) -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-    <symbol id="monstera" viewBox="0 0 200 270">
-      <path fill="currentColor" fill-rule="evenodd" d="
-        M100 34 C78 4 20 6 16 60 C14 74 15 86 18 96 L84 106 L20 120 C18 132 20 142 24 152 L86 150 L28 170 C30 182 34 194 40 204 L90 194 L48 216 C60 236 82 254 100 264 C118 254 140 236 152 216 L110 194 L160 204 C166 194 170 182 172 170 L114 150 L176 152 C180 142 182 132 180 120 L116 106 L182 96 C185 86 186 74 184 60 C180 6 122 4 100 34 Z
-        M62 78 m-11 0 a11 6 0 1 0 22 0 a11 6 0 1 0 -22 0 Z
-        M138 78 m-11 0 a11 6 0 1 0 22 0 a11 6 0 1 0 -22 0 Z
-        M64 128 m-9 0 a9 5 0 1 0 18 0 a9 5 0 1 0 -18 0 Z
-        M136 128 m-9 0 a9 5 0 1 0 18 0 a9 5 0 1 0 -18 0 Z
-        M70 176 m-7 0 a7 4 0 1 0 14 0 a7 4 0 1 0 -14 0 Z
-        M130 176 m-7 0 a7 4 0 1 0 14 0 a7 4 0 1 0 -14 0 Z"/>
-      <path fill="none" stroke="rgba(255,255,255,.35)" stroke-width="2" stroke-linecap="round" d="M100 40 V252 M100 60 L40 80 M100 60 L160 80 M100 112 L46 134 M100 112 L154 134 M100 164 L58 184 M100 164 L142 184 M100 212 L72 226 M100 212 L128 226"/>
-      <path fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" d="M100 34 C100 20 96 8 90 0"/>
-    </symbol>
-  </svg>
-
   <!-- Màn hình đầu: mặt bàn, phong bì rơi xuống -->
   <div class="scene" id="scene">
     <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Chạm để mở thư mời">
-      <svg class="leaf leaf--desk" aria-hidden="true" focusable="false"><use href="#monstera"/></svg>
+      <img class="leaf leaf--desk" src="resources/monstera1-leaf.png" alt="" aria-hidden="true" decoding="async">
       <div class="env-shadow" aria-hidden="true"></div>
       <div class="env-inner" aria-hidden="true">
         <div class="env-back"></div>
@@ -84,8 +68,8 @@
       </div>
 
       <div class="card__body">
-        <svg class="leaf leaf--big" aria-hidden="true" focusable="false"><use href="#monstera"/></svg>
-        <svg class="leaf leaf--small" aria-hidden="true" focusable="false"><use href="#monstera"/></svg>
+        <img class="leaf leaf--big" src="resources/monstera1-leaf.png" alt="" aria-hidden="true" decoding="async">
+        <img class="leaf leaf--small" src="resources/monstera1-leaf.png" alt="" aria-hidden="true" decoding="async">
 
         <div class="card__text">
           <p class="card__invite">Thân mời</p>

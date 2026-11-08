@@ -318,24 +318,22 @@ body[data-state="opening"] .scene {
 }
 
 /* --------------------------------------------------------------------------
-   Lá monstera
+   Lá monstera (resources/monstera1-leaf.png, minh họa đã tách vòng tròn nền)
    -------------------------------------------------------------------------- */
 
 .leaf {
   position: absolute;
   pointer-events: none;
-  color: var(--leaf);
-  filter: drop-shadow(0 6px 10px rgba(var(--shadow-warm), .12));
+  height: auto;
+  filter: drop-shadow(0 8px 12px rgba(var(--shadow-warm), .14));
 }
 
 .leaf--desk {
-  width: 150px;
-  height: 200px;
-  left: -58px;
-  bottom: -46px;
-  transform: rotate(32deg);
+  width: 170px;
+  left: -74px;
+  bottom: -54px;
+  transform: rotate(-24deg) scaleX(-1);
   z-index: 0;
-  color: var(--leaf);
 }
 
 /* --------------------------------------------------------------------------
@@ -511,21 +509,19 @@ body[data-state="open"] .card {
 }
 
 .leaf--big {
-  width: 64%;
-  aspect-ratio: 200 / 270;
-  right: -14%;
-  bottom: 6%;
-  transform: rotate(-30deg);
+  width: 72%;
+  right: -16%;
+  bottom: 12%;
+  transform: rotate(14deg);
   z-index: 0;
 }
 
 .leaf--small {
-  width: 44%;
-  aspect-ratio: 200 / 270;
-  left: -16%;
-  top: 38%;
-  transform: rotate(132deg);
-  opacity: .3;
+  width: 46%;
+  left: -14%;
+  top: 40%;
+  transform: rotate(-150deg) scaleX(-1);
+  opacity: .32;
   z-index: 0;
 }
 
