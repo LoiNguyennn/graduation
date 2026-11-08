@@ -109,15 +109,19 @@ const CONFIG = {
     const photo = document.getElementById("photo");
     const frame = document.getElementById("photoFrame");
     const logo = document.getElementById("logo");
+    const campus = document.getElementById("campus");
 
     const photoBroken = () => frame.classList.add("is-broken");
     const logoBroken = () => logo.classList.add("is-broken");
+    const campusBroken = () => campus.classList.add("is-broken");
 
     photo.addEventListener("error", photoBroken);
     logo.addEventListener("error", logoBroken);
+    campus.addEventListener("error", campusBroken);
     // Ảnh có thể đã lỗi trước khi script chạy
     if (photo.complete && photo.naturalWidth === 0) photoBroken();
     if (logo.complete && logo.naturalWidth === 0) logoBroken();
+    if (campus.complete && campus.naturalWidth === 0) campusBroken();
   }
 
   /* ---------- Tạo file .ics ---------- */

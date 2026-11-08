@@ -612,6 +612,28 @@ body[data-state="open"] .card {
   .card__sign { font-size: 22px; }
 }
 
+/* Ảnh trường trong khung vòm, nằm sau ảnh tách nền */
+.card__campus {
+  position: absolute;
+  right: -2%;
+  bottom: 28%;
+  width: 40%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: 62% 50%;
+  border-radius: 999px 999px 10px 10px;
+  border: 1.5px solid var(--ink);
+  box-shadow: 6px 6px 0 rgba(36, 58, 115, .16);
+  filter: saturate(.85);
+  z-index: 1;
+}
+
+.card__campus.is-broken { display: none; }
+
+@media (min-width: 560px) {
+  .card__campus { right: 0; bottom: 27%; width: 40%; }
+}
+
 /* Ảnh tách nền, tràn xuống mép dưới */
 .card__photo {
   position: absolute;
