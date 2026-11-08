@@ -509,10 +509,10 @@ body[data-state="open"] .card {
 }
 
 .leaf--small {
-  width: 46%;
-  left: -14%;
-  top: 40%;
-  transform: rotate(-150deg) scaleX(-1);
+  width: 30%;
+  right: -9%;
+  top: -2%;
+  transform: rotate(-22deg);
   opacity: .32;
   z-index: 0;
 }
