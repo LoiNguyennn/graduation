@@ -2,8 +2,8 @@
    CONFIG — sửa mọi thông tin ở đây, không cần đụng vào index.html
    ========================================================================== */
 const CONFIG = {
-  hostName: "Lợi",                       // tên thân mật, hiện trên phong bì và chữ ký
-  fullName: "[HỌ TÊN ĐẦY ĐỦ]",            // họ tên đầy đủ in trên thiệp
+  hostName: "Phúc Lợi",                  // tên thân mật, hiện trên phong bì và chữ ký
+  fullName: "Nguyễn Phúc Lợi",           // họ tên đầy đủ in trên thiệp
   school: "Trường Đại học Khoa học Tự nhiên",
   university: "Đại học Quốc gia TP. Hồ Chí Minh",
   degree: "Cử nhân Kỹ thuật Phần mềm",
@@ -20,9 +20,9 @@ const CONFIG = {
 
   intro: "Mình thân mời bạn đến chung vui trong",
   closing: "Có bạn ở đó, ngày vui của mình sẽ trọn vẹn hơn. Hẹn gặp bạn!",
-  studyYears: "2022–2026",               // dòng nhỏ cuối thiệp: build 2022–2026 · release 06.12.2026
+  studyYears: "2022 – 2026",             // dòng nhỏ cuối thiệp
 
-  icsTitle: "Lễ tốt nghiệp của Lợi",
+  icsTitle: "Lễ tốt nghiệp của Phúc Lợi",
   icsFileName: "le-tot-nghiep-loi.ics",
 };
 
@@ -68,7 +68,7 @@ const CONFIG = {
   function render() {
     const { d, m, y } = parseDate(CONFIG.date);
     setField("hostName", CONFIG.hostName);
-    setField("hostInitial", CONFIG.hostName.trim().charAt(0).toUpperCase());
+    setField("hostInitial", CONFIG.hostName.trim().split(/\s+/).pop().charAt(0).toUpperCase()); // chữ cái đầu của tên (Lợi → L)
     setField("fullName", CONFIG.fullName);
     setField("school", CONFIG.school);
     setField("university", CONFIG.university);
@@ -79,7 +79,7 @@ const CONFIG = {
     setField("intro", CONFIG.intro);
     setField("closing", CONFIG.closing);
     setField("dateText", formatDateVi(CONFIG.date));
-    setField("monoLine", `build ${CONFIG.studyYears} · release ${pad(d)}.${pad(m)}.${y}`);
+    setField("monoLine", CONFIG.studyYears);
 
     const timeEl = document.querySelector('[data-field="timeText"]');
     if (CONFIG.time) {
