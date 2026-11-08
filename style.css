@@ -508,14 +508,6 @@ body[data-state="open"] .card {
   .card__photo { right: -6%; width: 54%; }
 }
 
-.leaf--big {
-  width: 72%;
-  right: -16%;
-  bottom: 12%;
-  transform: rotate(14deg);
-  z-index: 0;
-}
-
 .leaf--small {
   width: 46%;
   left: -14%;
