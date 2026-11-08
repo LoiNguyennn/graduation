@@ -36,13 +36,13 @@ const CONFIG = {
     {
       name: "Trường ĐH Sư phạm TP.HCM",
       address: "280 An Dương Vương, Quận 5",
-      note: "Ngay cạnh trường, đi bộ khoảng 5 phút.",
+      note: "Hai trường thông nhau, đi bộ sang chỉ khoảng 3 phút.",
       mapQuery: "Trường Đại học Sư phạm TP.HCM, 280 An Dương Vương, Quận 5, TP.HCM",
     },
     {
       name: "Nowzone",
       address: "235 Nguyễn Văn Cừ, Quận 1",
-      note: "Trung tâm thương mại đối diện cổng trường, bãi xe tầng hầm, đi bộ khoảng 3 phút.",
+      note: "Trung tâm thương mại gần trường, bãi xe tầng hầm, đi bộ khoảng 5 phút.",
       mapQuery: "Nowzone Fashion Mall, 235 Nguyễn Văn Cừ, Quận 1, TP.HCM",
     },
   ],
