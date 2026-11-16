@@ -12,7 +12,8 @@ const CONFIG = {
   degreeEn: "Software Engineering",
 
   date: "2026-12-06",                    // YYYY-MM-DD
-  time: "",                              // "HH:MM" giờ Việt Nam, ví dụ "08:30". Để trống nếu chưa có.
+  time: "11:00",                         // giờ bắt đầu "HH:MM". Để trống nếu chưa có.
+  timeEnd: "12:00",                      // giờ kết thúc, để trống nếu chỉ muốn hiện giờ bắt đầu
   timePlaceholder: "giờ sẽ cập nhật sớm",
 
   venue: "Trường ĐH Khoa học Tự nhiên, cơ sở 1",
@@ -124,7 +125,8 @@ const CONFIG = {
     const weekday = formatDateVi(CONFIG.date).split(",")[0];
     const timeEl = document.querySelector('[data-field="timeLine"]');
     if (CONFIG.time) {
-      timeEl.textContent = `Vào lúc ${CONFIG.time}, ${weekday}`;
+      const range = CONFIG.timeEnd ? `${CONFIG.time} – ${CONFIG.timeEnd}` : CONFIG.time;
+      timeEl.textContent = `${weekday}, ${range}`;
       timeEl.classList.remove("is-placeholder");
     } else {
       timeEl.textContent = `${weekday}, ${CONFIG.timePlaceholder}`;
