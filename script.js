@@ -12,8 +12,8 @@ const CONFIG = {
   degreeEn: "Software Engineering",
 
   date: "2026-12-06",                    // YYYY-MM-DD
-  time: "11:00",                         // giờ bắt đầu "HH:MM". Để trống nếu chưa có.
-  timeEnd: "12:00",                      // giờ kết thúc, để trống nếu chỉ muốn hiện giờ bắt đầu
+  time: "10:45",                         // giờ bắt đầu "HH:MM". Để trống nếu chưa có.
+  timeEnd: "11:30",                      // giờ kết thúc, để trống nếu chỉ muốn hiện giờ bắt đầu
   timePlaceholder: "giờ sẽ cập nhật sớm",
 
   venue: "Trường ĐH Khoa học Tự nhiên, cơ sở 1",
