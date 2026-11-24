@@ -699,6 +699,58 @@ body[data-state="open"] .card {
 .card__photo.is-broken img { display: none; }
 .card__photo.is-broken .card__photo-fallback { display: grid; }
 
+/* Xác nhận tham dự */
+.rsvp {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 18px 0 0;
+}
+
+.rsvp[hidden],
+.rsvp [hidden] { display: none; }
+
+body:not([data-state="open"]) .rsvp { visibility: hidden; opacity: 0; }
+body[data-state="open"] .rsvp { opacity: 1; transition: opacity .3s var(--ease); }
+
+.rsvp__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.rsvp__input {
+  min-height: 48px;
+  padding: 0 20px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 16px; /* >= 16px để iOS không tự phóng to khi gõ */
+}
+
+.rsvp__input::placeholder { color: var(--ink-soft); }
+
+.rsvp__input:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.rsvp__msg {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--leaf);
+}
+
+.rsvp__msg:empty { display: none; }
+.rsvp__msg.is-error { color: var(--wax); }
+
 /* Nút hành động dưới thiệp */
 .actions {
   display: flex;
@@ -741,10 +793,19 @@ body[data-state="open"] .actions { opacity: 1; transition: opacity .3s var(--eas
   color: var(--ink);
 }
 
+.btn--wax {
+  background: var(--wax);
+  border-color: var(--wax);
+  color: #fff;
+}
+
+.btn:disabled { opacity: .7; cursor: progress; }
+
 @media (hover: hover) and (pointer: fine) {
   .btn:hover { transform: translateY(-1px); transition-duration: var(--m-in); }
   .btn--primary:hover { background: var(--ink-hover); border-color: var(--ink-hover); }
   .btn--ghost:hover { background: #fff; }
+  .btn--wax:hover { background: var(--wax-dark); border-color: var(--wax-dark); }
 }
 
 .btn:active {

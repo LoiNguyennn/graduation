@@ -93,6 +93,14 @@
       </div>
     </article>
 
+    <!-- Xác nhận tham dự: gửi tên về Google Sheet qua CONFIG.rsvpUrl. Ẩn nếu chưa cấu hình. -->
+    <form class="rsvp" id="rsvp" hidden>
+      <label class="rsvp__label" for="rsvpName">Tên của bạn</label>
+      <input class="rsvp__input" id="rsvpName" name="name" type="text" maxlength="40" autocomplete="name" placeholder="Tên của bạn" hidden>
+      <button class="btn btn--wax" id="rsvpBtn" type="submit">Xác nhận sẽ đến</button>
+      <p class="rsvp__msg" id="rsvpMsg" role="status" aria-live="polite"></p>
+    </form>
+
     <div class="actions">
       <button class="btn btn--primary" id="openParking" type="button">Gửi xe ở đâu</button>
       <a class="btn btn--ghost" id="openMap" href="#" target="_blank" rel="noopener">Xem bản đồ</a>

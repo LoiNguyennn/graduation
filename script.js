@@ -27,6 +27,10 @@ const CONFIG = {
   phoneLabel: "Đến nơi thì gọi Lợi nhé",  // câu dẫn trước số điện thoại
   studyYears: "2022 – 2026",             // góc trên phải của thiệp
 
+  // Xác nhận tham dự: URL Web App của Google Apps Script (xem apps-script/Code.gs).
+  // Để trống thì ẩn nút xác nhận.
+  rsvpUrl: "https://script.google.com/macros/s/AKfycbx5l4DRB87uDSOwywWNY7SiYoo6YuDVi9f8A3OK7LtRiAPsCSIdzSVUsJCTn9j68hXS/exec",
+
   // Gợi ý chỗ gửi xe, theo thứ tự ưu tiên. note: một câu ngắn hiện dưới địa chỉ.
   parkingIntro: "Ngày lễ bãi xe trong trường dễ quá tải, bạn có thể chọn một trong ba chỗ này.",
   parking: [
@@ -62,6 +66,7 @@ const CONFIG = {
   const replayBtn = document.getElementById("replay");
   const parkingDialog = document.getElementById("parkingDialog");
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let recipient = "";                     // tên lấy từ link, gán trong render()
 
   /* ---------- Tiện ích ---------- */
   const pad = (n) => String(n).padStart(2, "0");
@@ -140,6 +145,7 @@ const CONFIG = {
     // Tên người nhận: ưu tiên ?to=Tên, không có thì lấy từ fragment (#Tên hoặc #to=Tên).
     // Fragment giữ nguyên qua link rút gọn, nên dùng được dạng go.zalo.me/graduation#Minh
     const to = recipientFromUrl().slice(0, 40);
+    recipient = to;
     setField("toName", to || CONFIG.defaultRecipient);
     if (to) {
       const env = document.querySelector('[data-field="toEnvelope"]');
@@ -189,6 +195,57 @@ const CONFIG = {
   function openParking() {
     parkingDialog.showModal();
   }
+
+  /* ---------- Xác nhận tham dự ---------- */
+  const rsvpForm = document.getElementById("rsvp");
+  const rsvpInput = document.getElementById("rsvpName");
+  const rsvpBtn = document.getElementById("rsvpBtn");
+  const rsvpMsg = document.getElementById("rsvpMsg");
+  const RSVP_KEY = "rsvp:";
+
+  function rsvpDone(name) {
+    rsvpInput.hidden = true;
+    rsvpBtn.hidden = true;
+    rsvpMsg.classList.remove("is-error");
+    rsvpMsg.textContent = `Đã nhận xác nhận của ${name}. Hẹn gặp bạn nhé!`;
+  }
+
+  function setupRsvp() {
+    if (!CONFIG.rsvpUrl) return;
+    rsvpForm.hidden = false;
+    rsvpInput.hidden = Boolean(recipient);
+    let saved = null;
+    try { saved = localStorage.getItem(RSVP_KEY + (recipient || "")); } catch (_) { /* không có storage */ }
+    if (saved) rsvpDone(saved);
+  }
+
+  function submitRsvp(e) {
+    e.preventDefault();
+    const name = (recipient || rsvpInput.value).trim().slice(0, 40);
+    if (!name) {
+      rsvpMsg.classList.add("is-error");
+      rsvpMsg.textContent = "Bạn điền tên giúp mình nhé.";
+      rsvpInput.focus();
+      return;
+    }
+    rsvpBtn.disabled = true;
+    rsvpBtn.textContent = "Đang gửi…";
+    rsvpMsg.textContent = "";
+    // no-cors: Apps Script trả về qua redirect, không cần đọc phản hồi; chỉ lỗi mạng mới reject.
+    fetch(CONFIG.rsvpUrl, { method: "POST", mode: "no-cors", body: new URLSearchParams({ name }) })
+      .then(() => {
+        try { localStorage.setItem(RSVP_KEY + (recipient || ""), name); } catch (_) { /* bỏ qua */ }
+        rsvpDone(name);
+      })
+      .catch(() => {
+        rsvpBtn.disabled = false;
+        rsvpBtn.textContent = "Xác nhận sẽ đến";
+        rsvpMsg.classList.add("is-error");
+        rsvpMsg.textContent = "Chưa gửi được, bạn thử lại giúp mình nhé.";
+      });
+  }
+
+  rsvpForm.addEventListener("submit", submitRsvp);
 
   /* ---------- Ảnh lỗi: hiện khung thay thế, ẩn logo ---------- */
   function guardImages() {
@@ -249,5 +306,6 @@ const CONFIG = {
   });
 
   render();
+  setupRsvp();
   guardImages();
 })();
